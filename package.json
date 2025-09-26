@@ -1,0 +1,14 @@
+{
+  "name": "sine-cosine-visualizer",
+  "version": "1.0.0",
+  "description": "交互式正弦余弦函数可视化工具",
+  "main": "start-server.js",
+  "scripts": {
+    "start": "node start-server.js",
+    "dev": "node start-server.js",
+    "serve": "node start-server.js"
+  },
+  "keywords": ["math", "visualization", "sine", "cosine", "education"],
+  "author": "CodeBuddy",
+  "license": "MIT"
+}
