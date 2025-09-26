@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正弦余弦曲线可视化 - 初中数学知识点</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>正弦余弦曲线可视化</h1>
+            <p>初中数学知识点 - 三角函数图像与性质</p>
+        </header>
+
+        <div class="main-content">
+            <!-- 图形和控制整合区域 -->
+            <div class="graph-section">
+                <div class="graph-controls">
+                    <!-- 画布区域 -->
+                    <div class="canvas-container">
+                        <!-- 图例区域 -->
+                        <div class="legend-area">
+                            <div class="legend-item">
+                                <span class="legend-line sin-line"></span>
+                                <span class="legend-text sin-color">sin(x)</span>
+
+                                <button class="eye-button" id="sin-eye">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                        <path class="hide-line" d="M21 21L3 3" style="display: none;"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-line cos-line"></span>
+                                <span class="legend-text cos-color">cos(x)</span>
+
+                                <button class="eye-button" id="cos-eye">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                        <path class="hide-line" d="M21 21L3 3" style="display: none;"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <canvas id="mathCanvas" width="700" height="400"></canvas>
+                        <div class="canvas-info">
+                            <div id="mouse-coords">坐标: (0, 0)</div>
+                            <div id="angle-info">角度: 0° (0 弧度)</div>
+                        </div>
+                    </div>
+
+                    <!-- 控制面板 -->
+                    <div class="control-panel">
+                        <h3>参数控制</h3>
+                        
+                        <div class="function-display">
+                            <div class="function-equation" id="sin-equation" style="display: block;">
+                                <span class="sin-color">y = <span id="amplitude-display">1</span> × sin(<span id="frequency-display">1</span>x + <span id="phase-display">0</span>) + <span id="offset-display">0</span></span>
+                            </div>
+                            <div class="function-equation" id="cos-equation" style="display: block;">
+                                <span class="cos-color">y = <span id="amplitude-display-cos">1</span> × cos(<span id="frequency-display-cos">1</span>x + <span id="phase-display-cos">0</span>) + <span id="offset-display-cos">0</span></span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="amplitude">振幅 (A): <span id="amplitude-value">1.0</span></label>
+                            <input type="range" id="amplitude" min="0.1" max="3" step="0.1" value="1">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="frequency">频率 (ω): <span id="frequency-value">1.0</span></label>
+                            <input type="range" id="frequency" min="0.1" max="3" step="0.1" value="1">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="phase">相位 (φ): <span id="phase-value">0.0</span></label>
+                            <input type="range" id="phase" min="-3.14" max="3.14" step="0.1" value="0">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="offset">垂直偏移 (k): <span id="offset-value">0.0</span></label>
+                            <input type="range" id="offset" min="-2" max="2" step="0.1" value="0">
+                        </div>
+
+                        <div class="control-buttons">
+                            <button id="animate">开始动画</button>
+                            <button id="reset">重置参数</button>
+                        </div>
+                        
+                        <div class="preset-functions">
+                            <h4>常用函数预设</h4>
+                            <div class="preset-buttons">
+                                <button class="preset-btn" id="preset-sin2x" data-preset="sin2x">y = sin2x</button>
+                                <button class="preset-btn" id="preset-cos2x" data-preset="cos2x">y = cos2x</button>
+                                <button class="preset-btn" id="preset-abs-sinx" data-preset="abs-sinx">y = |sinx|</button>
+                                <button class="preset-btn" id="preset-abs-sin2x" data-preset="abs-sin2x">y = |sin2x|</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 知识点展示 -->
+        <div class="knowledge-section">
+            <div class="knowledge-card">
+                <h3>函数性质</h3>
+                <ul>
+                    <li><strong>定义域：</strong>R (所有实数)</li>
+                    <li><strong>值域：</strong>[-A+k, A+k]</li>
+                    <li><strong>周期：</strong>T = 2π/ω</li>
+                    <li><strong>对称性：</strong>sin(x)关于原点对称，cos(x)关于y轴对称</li>
+                </ul>
+            </div>
+
+            <div class="knowledge-card">
+                <h3>特殊角度值</h3>
+                <table class="special-values">
+                    <thead>
+                        <tr>
+                            <th>角度</th>
+                            <th>弧度</th>
+                            <th>sin值</th>
+                            <th>cos值</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0°</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>30°</td>
+                            <td>π/6</td>
+                            <td>1/2</td>
+                            <td>√3/2</td>
+                        </tr>
+                        <tr>
+                            <td>45°</td>
+                            <td>π/4</td>
+                            <td>√2/2</td>
+                            <td>√2/2</td>
+                        </tr>
+                        <tr>
+                            <td>60°</td>
+                            <td>π/3</td>
+                            <td>√3/2</td>
+                            <td>1/2</td>
+                        </tr>
+                        <tr>
+                            <td>90°</td>
+                            <td>π/2</td>
+                            <td>1</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="knowledge-card">
+                <h3>图像特点</h3>
+                <ul>
+                    <li><strong>振幅 (A)：</strong>控制曲线的最大偏离程度</li>
+                    <li><strong>频率 (ω)：</strong>控制曲线的疏密程度</li>
+                    <li><strong>相位 (φ)：</strong>控制曲线的左右平移</li>
+                    <li><strong>偏移 (k)：</strong>控制曲线的上下平移</li>
+                    <li><strong>关系：</strong>cos(x) = sin(x + π/2)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/canvas.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
